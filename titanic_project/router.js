@@ -1,15 +1,13 @@
-var express = require('express');
-var router = express.Router();
-
-const credential = {
-    name: "aze",
-    password: "azeaze"
-}
+import express from 'express';
+import { Router } from 'express';
+import {PostLoginController } from './controllers/login.js';
+const router = Router()
 
 // login user
 router.route("/login").get(function(req,res){
     res.render("login.twig",{title:'User Login'});
-}).post(function(req,res){
+})
+/*.post(function(req,res){
     if(req.body.name == credential.name && req.body.password == credential.password){
         req.session.user = req.body.name;
         res.redirect('/dashboard');
@@ -17,7 +15,7 @@ router.route("/login").get(function(req,res){
         res.end("Invalid Credentials")
         res.redirect('/login');
     }
-})
+}) */
 
 
 // route for dashboard
@@ -35,5 +33,6 @@ router.get("/logout",function(req,res){
 	res.redirect("/");
 });
 
+router.post('/login', PostLoginController);
 
-module.exports = router;
+export default router;

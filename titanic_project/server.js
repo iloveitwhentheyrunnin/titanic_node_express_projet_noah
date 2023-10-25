@@ -1,13 +1,14 @@
-const express = require('express');
-const path = require('path');
-const bodyparser = require("body-parser");
-const session = require('express-session');
-const { v4: uuidv4 } = require("uuid");
-const dotenv = require("dotenv");
-const mongoose = require("mongoose");
-const flash = require("express-flash");
-const MongoStore = require("connect-mongo");
-const router = require("./router")
+import dotenv from 'dotenv';
+import express from 'express';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import router from './router.js';
+import mongoose from 'mongoose';
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import flash from "express-flash";
+import bodyparser from 'body-parser';
+import {v4 as uuidv4} from 'uuid';
 
 // ==========
 // App initialization
@@ -21,6 +22,7 @@ const {
   MONGO_STRING,
   MONGO_DB_NAME
 } = process.env;
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
@@ -62,7 +64,7 @@ app.get('/',(req,res) =>{
 })
 
 try {
-    mongoose.connect(`${MONGO_STRING}${MONGO_DB_NAME}`)
+    await mongoose.connect(`${MONGO_STRING}${MONGO_DB_NAME}`)
     console.log('✅ Connecté à la base MongoDB');
 
     // ==========
