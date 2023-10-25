@@ -15,6 +15,7 @@ router.route("/login").get(function(req,res){
         res.redirect('/dashboard');
     }else{
         res.end("Invalid Credentials")
+        res.redirect('/login');
     }
 })
 
@@ -24,7 +25,7 @@ router.get('/dashboard', (req,res) => {
     if(req.session.user){
         res.render('dashboard.twig',{user: req.session.user})
     } else {
-        res.send("Unauthorized User")
+        res.redirect('/');
     }
 })
 
