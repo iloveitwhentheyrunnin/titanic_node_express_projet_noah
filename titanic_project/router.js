@@ -3,14 +3,20 @@ import { Router } from 'express';
 import {PostLoginController, LoginController } from './controllers/login.js';
 import { PostResearchController, ResearchController } from './controllers/research.js';
 const router = Router()
+import { authGuard, setTemplateVars } from './middlewares/session.js';
 
+router.use(setTemplateVars);
 
 router.get('/login', LoginController);
 
-router.get('/research', ResearchController);
+router.post('/login', PostLoginController);
 
-// route for dashboard
-router.get('/dashboard', (req,res) => {
+router.get('/research', authGuard, ResearchController);
+
+// route for dashboard 
+
+//to do dashboard controller
+router.get('/dashboard', authGuard, (req,res) => {
     if(req.session.user){
         res.render('dashboard.twig',{user: req.session.user.name})
     } else {
@@ -18,13 +24,15 @@ router.get('/dashboard', (req,res) => {
     }
 })
 
-router.get("/logout",function(req,res){   
+
+//to do logoutcontroller
+router.get("/logout", authGuard, function(req,res){   
 	req.session.user = null;
 	req.session.error = null;
 	res.redirect("/");
 });
 
-router.post('/login', PostLoginController);
-router.post('/research', PostResearchController);
+router.post('/research', authGuard, PostResearchController);
+
 
 export default router;

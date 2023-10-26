@@ -19,6 +19,7 @@ const {
   APP_HOSTNAME,
   APP_PORT,
   NODE_ENV,
+  APP_SECRET,
   MONGO_STRING,
   MONGO_DB_NAME
 } = process.env;
@@ -31,7 +32,7 @@ app.locals.pretty = NODE_ENV !== 'production';
 
 app.use(session({
     //unique session id with uuid
-    secret: uuidv4(),
+    secret: APP_SECRET,
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: `${MONGO_STRING}${MONGO_DB_NAME}` })

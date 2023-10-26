@@ -6,7 +6,19 @@
 
 {% block content %}
   <h1>Research Results</h1>
+
+	{% if docs[0] != null %}
     <p class="important">
-       Here's the result for the passenger aged of {{age}}, {{sex}} from the {{class}} class.
-    </p>
+       Here's the result for your research:
+	</p>
+	{% else %}
+	<p class="important" id="error">
+      No survivors with these filters...
+	</p>
+	{% endif %}
+
+
+	{% for passenger in docs %}
+	{{passenger.Name}}
+	{% endfor %}
 {% endblock %}

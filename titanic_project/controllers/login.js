@@ -12,6 +12,7 @@ export async function PostLoginController(req, res) {
 
   const { name, password } = req.body;
 
+
   if (name === docs.name && password === docs.password) {
     req.session.user = {
       isLogged: true,

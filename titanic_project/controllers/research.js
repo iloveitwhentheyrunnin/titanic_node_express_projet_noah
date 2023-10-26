@@ -11,10 +11,16 @@ export async function PostResearchController(req, res) {
   const pclass = req.body.pclass;
 
   const docs = await PassengersModel.find({
-    $or: [
+    $and: [
       {Sex: sex,},{Age: age,},{Pclass: pclass,},
     ],
   });
+
+  if(docs != null){
+     res.render('research.twig',{docs})
+  } else {
+     res.redirect('/dashboard');
+  }
 
   
 }

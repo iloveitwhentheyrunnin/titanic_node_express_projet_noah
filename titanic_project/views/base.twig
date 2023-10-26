@@ -3,14 +3,12 @@
 	<head>
 		{% block head %}
 			<link rel="stylesheet" href="/static/style.css"/>
-                        <header>The Titanic Tool</header>
-			<title>
-				{% block title %}{% endblock %}
-				{{title}}</title>
-
+			<meta meta name="viewport" content="width=device-width, initial-scale=1">
+			<title>{% block title %}{% endblock %}{{title}}</title>
 		{% endblock %}
 	</head>
-	<body>
+	<body> 
+	<header>The Titanic Tool</header>
 		<div id="content"> 
 			{% block content %}
 			{% endblock %}
