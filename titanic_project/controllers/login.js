@@ -1,4 +1,5 @@
-import UsersModel from "../models/User.js";
+import { UsersModel } from '../Models/User.js';
+import { sha256 } from '../utils/utils.js';
 
 export function LoginController(req, res) {
   res.render('login.twig',{title: 'Login to the Titanic Tool'})
@@ -6,14 +7,11 @@ export function LoginController(req, res) {
 
 export async function PostLoginController(req, res) {
 
-  const docs = await UsersModel.findOne({
-    name: req.body.name,
-  })
-
   const { name, password } = req.body;
 
+  const user = await UsersModel.findOne({ name, password: sha256(password) });
 
-  if (name === docs.name && password === docs.password) {
+  if (user) {
     req.session.user = {
       isLogged: true,
     }
@@ -24,5 +22,3 @@ export async function PostLoginController(req, res) {
     res.redirect('/login')
   }
 }
-
-

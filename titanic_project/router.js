@@ -4,10 +4,15 @@ import {PostLoginController, LoginController } from './controllers/login.js';
 import { PostResearchController, ResearchController } from './controllers/research.js';
 const router = Router()
 import { authGuard, setTemplateVars } from './middlewares/session.js';
+import { SignController, SignUpController } from './controllers/signup.js';
 
 router.use(setTemplateVars);
 
 router.get('/login', LoginController);
+
+router.get('/signup', SignController);
+
+router.post('/signup', SignUpController);
 
 router.post('/login', PostLoginController);
 
@@ -26,7 +31,7 @@ router.get('/dashboard', authGuard, (req,res) => {
 
 
 //to do logoutcontroller
-router.get("/logout", authGuard, function(req,res){   
+router.get("/logout", authGuard,function(req,res){   
 	req.session.user = null;
 	req.session.error = null;
 	res.redirect("/");

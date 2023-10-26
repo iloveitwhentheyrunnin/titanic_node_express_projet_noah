@@ -7,9 +7,18 @@
 {% block content %}
   <h1>Research Results</h1>
 
+  <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+
 	{% if docs[0] != null %}
     <p class="important">
-       Here's the result for your research:
+       Here's the result for your research with one of thesecriterias : 
+	   <br>
+	   <b>
+	   Sex : {{sex|default('no filter')}} |
+	   Aged : {{age|default('no filter')}} |
+	   Pclass : {{pclass|default('no filter')}} |
+	   </b>
 	</p>
 	{% else %}
 	<p class="important" id="error">
@@ -19,6 +28,41 @@
 
 
 	{% for passenger in docs %}
-	{{passenger.Name}}
+	{{passenger.Name}}, | Sex : {{passenger.Sex}}, Pclass : {{passenger.Pclass}}, Aged: {{passenger.Age|default('unknow')}}
+	{% if passenger.Survived == 0 %} 
+	<div style="color:red">Dead </div>
+	{% else %}
+	<div style="color:green">Alive</div>
+	{% endif %}
+	<br>
 	{% endfor %}
+	<script>
+window.onload = function() {
+
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	theme: "dark1", // "light1", "light2", "dark1", "dark2"
+	animationEnabled: true,
+	title: {
+		text: "All Survivors Ratio"
+	},
+	data: [{
+		type: "pie",
+		startAngle: 25,
+		toolTipContent: "<b>{label}</b>: {y}%",
+		showInLegend: "true",
+		legendText: "{label}",
+		indexLabelFontSize: 16,
+		indexLabel: "{label} - {y}",
+		dataPoints: [
+			{ y: {{survivors}}, label: "Alive" },
+			{ y: {{deads}}, label: "Dead" },
+		]
+	}]
+});
+chart.render();
+
+}
+
+</script>
 {% endblock %}

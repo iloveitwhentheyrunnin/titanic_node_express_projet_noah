@@ -6,12 +6,12 @@
 
 {% block content %}
 	<h1>{{title}}</h1>
-	{% if errorMessage is defined %}
-	{{errorMessage}}
-	{% endif %}
-	<form action="/login" method="POST">
+	  <p class="important">
+       Create your dumb access to the Titanic Database, as a register route didn't were asked for this tp :p
+    </p>
+	<form action="/signup" method="POST">
 		<input type="text" required="true" class="form-control" placeholder="Name" name="name">
 		<input type="password" required="true" class="form-control" placeholder="Password" name="password">
-		<button type="submit" name="login">Connect</button>
+		<button type="submit" name="signup">Register</button>
 	</form>
 {% endblock %}
