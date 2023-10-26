@@ -10,7 +10,16 @@
 {% block content %}
     <h1>Dashboard</h1>
     <p class="important">
-       Welcome {{ user }}, to the Titanic Tool Dashboard!
+       Welcome to the Titanic Tool Dashboard! Find a survivor with this form
     </p>
+    <form action="/research" method="POST">
+		<select name="sex">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+        </select>
+		<input type="int" class="form-control" placeholder="Age" name="age">
+        <input type="int" class="form-control" placeholder="Class" name="pclass">
+		<button type="submit" name="research">Research</button>
+	</form>
      <a href="/logout"><h1><button>Log out</button></h1></a>
 {% endblock %}
