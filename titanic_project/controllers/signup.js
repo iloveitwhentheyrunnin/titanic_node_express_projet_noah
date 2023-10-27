@@ -20,14 +20,18 @@ export async function SignUpController(req, res) {
   const existingUser = await UsersModel.findOne({ name });
 
   if (existingUser !== null) {
+    req.flash('error', 'You cannot use this name.');
     res.redirect('/signup');
+  } else {
+    try {
+      const newUser = await UsersModel.createUser(name, password);
+      req.flash('success', 'Account created! Now you can login');
+      res.redirect('/login');
+    } catch ({ message: errorMessage }) {
+      return res.status(400).render('login.twig', { errorMessage, values: req.body });
+    }
   }
 
-  try {
-    const newUser = await UsersModel.createUser(name, password);
-    res.redirect('/login');
-  } catch ({ message: errorMessage }) {
-    return res.status(400).render('login.twig', { errorMessage, values: req.body });
-  }
+
 }
 

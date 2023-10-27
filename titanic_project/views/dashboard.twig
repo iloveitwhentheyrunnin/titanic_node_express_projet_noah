@@ -9,6 +9,9 @@
 {% endblock %}
 {% block content %}
     <h1>Dashboard</h1>
+    {% if flash.success.length != 0 %}
+				<div class="flash_success">{{ flash.success }}</div>
+	{% endif %}
     <p class="important">
        Welcome to the Titanic Tool Dashboard! Find a survivor with this form, that has one of these property
     </p>

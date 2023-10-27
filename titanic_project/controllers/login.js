@@ -12,6 +12,7 @@ export async function PostLoginController(req, res) {
   const user = await UsersModel.findOne({ name, password: sha256(password) });
 
   if (user) {
+    req.flash('success', 'Connection successfull!');
     req.session.user = {
       isLogged: true,
     }
@@ -19,6 +20,7 @@ export async function PostLoginController(req, res) {
     res.redirect('/dashboard')
 
   } else {
+    req.flash('error', 'Connection failed! Invalid credentials');
     res.redirect('/login')
   }
 }
